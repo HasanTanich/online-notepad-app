@@ -18,7 +18,7 @@ features working in this release:
           password: Mahadi123
 
   - Logout
-    - user data will be cleared from local storage
+    - user data will be cleared from local storage and he will be redirected to login page.
 
   - Register
     - user will be registered to our firebase.
