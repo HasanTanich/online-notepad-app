@@ -13,7 +13,7 @@ features working in this release:
         -can check login functionality using these credentials from our firebase account:
           email : hasantanich@gmail.com
           password: Hasan123
-          or,
+          or
           mahadibabiker@gmail.com
           password: Mahadi123
 
