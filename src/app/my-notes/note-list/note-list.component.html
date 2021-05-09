@@ -1,0 +1,16 @@
+<div fxLayout="row" style="padding: 50px;">
+    <div fxFlex="40">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let note of notes; let i = index" cdkDrag style="margin-top: 10px;">
+                {{note.title
+                + " " + (i+1)}}</div>
+        </div>
+    </div>
+
+    <div fxFlex="55" style="margin-left: 60px;">
+        <div class="text-box">
+            <p>{{notes[0].text}}</p>
+        </div>
+    </div>
+
+</div>
