@@ -35,7 +35,7 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'dashboard',
+        redirectTo: 'auth/login',
         pathMatch: 'full'
     }
 ];

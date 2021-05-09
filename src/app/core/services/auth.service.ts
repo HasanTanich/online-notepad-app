@@ -22,7 +22,7 @@ export class AuthenticationService {
                 localStorage.setItem('user', JSON.stringify(res));
                 this.isLoggedIn = true;
                 console.log('You are successfuly logged in');
-                this.router.navigate(['/']);
+                this.router.navigate(['/dashboard']);
             }).catch(err => {
                 alert('something is wrong:' + err.message);
             });
@@ -39,6 +39,17 @@ export class AuthenticationService {
         //     expiration: moment().add(1, 'days').toDate(),
         //     fullName: 'John Doe'
         // }));
+    }
+
+    signup(email: string, password: string) {
+        this.firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .then(res => {
+                alert('Registration successful');
+                // localStorage.setItem('user', JSON.stringify(res.user));
+                console.log(res);
+            }).catch(err => {
+                alert('something is wrong: ' + err.message);
+            });
     }
 
     logout(): void {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { EMPTY, of } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
 import { AuthenticationService } from '../../core/services/auth.service';
@@ -16,6 +15,7 @@ import { NotificationService } from '../../core/services/notification.service';
 export class LoginComponent implements OnInit {
 
     loginForm: FormGroup;
+    registerForm: FormGroup;
     loading: boolean;
     email: string;
     password: string;
@@ -40,9 +40,22 @@ export class LoginComponent implements OnInit {
             password: new FormControl('', Validators.required),
             rememberMe: new FormControl(savedUserEmail !== null)
         });
+
+        this.registerForm = new FormGroup({
+            email: new FormControl(''),
+            password: new FormControl(''),
+        });
     }
 
-    login() {
+    signUp() {
+        this.email = this.registerForm.get('email').value;
+        this.password = this.registerForm.get('password').value;
+        this.authenticationService.signup(this.email, this.password);
+        this.email = '';
+        this.password = '';
+    }
+
+    signIn() {
         this.email = this.loginForm.get('email').value;
         this.password = this.loginForm.get('password').value;
         const rememberMe = this.loginForm.get('rememberMe').value;
