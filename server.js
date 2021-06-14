@@ -5,10 +5,10 @@ const path = require('path');
 const app = express();
 
 // Serve only the static files form the dist directory
-app.use(express.static('./dist/angular-material-template'));
+app.use(express.static('./dist/online-notepad-app'));
 
 app.get('/*', (req, res) =>
-    res.sendFile('index.html', { root: 'dist/angular-material-template/' }),
+    res.sendFile('index.html', { root: 'dist/online-notepad-app/' }),
 );
 
 // Start the app by listening on the default Heroku port

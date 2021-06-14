@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Router } from '@angular/router';
 
 import { of } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ import { of } from 'rxjs';
 export class AuthenticationService {
     isLoggedIn = false;
 
-    constructor(private router: Router, public firebaseAuth: AngularFireAuth, public afs: AngularFirestore) { }
+    constructor(private router: Router, public firebaseAuth: AngularFireAuth, public afs: AngularFirestore, public notify: NotificationService) { }
 
     login(email: string, password: string) {
         this.firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -21,8 +22,8 @@ export class AuthenticationService {
                 console.log(res)
                 localStorage.setItem('user', JSON.stringify(res));
                 this.isLoggedIn = true;
-                console.log('You are successfuly logged in');
-                this.router.navigate(['/dashboard']);
+                this.notify.openSnackBar("Well done you cuck");
+                this.router.navigate(['/my-notes']);
             }).catch(err => {
                 alert('something is wrong:' + err.message);
             });
@@ -59,14 +60,15 @@ export class AuthenticationService {
     getCurrentUser(): any {
         // TODO: Enable after implementation
         // return JSON.parse(this.localStorage.getItem('currentUser'));
+
         return {
-            token: 'aisdnaksjdn,axmnczm',
+            token: localStorage.user.refreshToken,
             isAdmin: true,
-            email: 'john.doe@gmail.com',
-            id: '12312323232',
-            alias: 'john.doe@gmail.com'.split('@')[0],
+            email: localStorage.user.email,
+            uid: localStorage.user.email,
+            // alias: localStorage.user.email.split('@')[0],
             expiration: moment().add(1, 'days').toDate(),
-            fullName: 'John Doe'
+            fullName: 'Mahadi BABIkerino',
         };
     }
 

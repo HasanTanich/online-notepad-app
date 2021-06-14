@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.titleService.setTitle('angular-material-template - Login');
+        this.titleService.setTitle('online-notepad-app - Login');
         this.authenticationService.logout();
         this.createForm();
     }
@@ -59,6 +59,13 @@ export class LoginComponent implements OnInit {
         this.email = this.loginForm.get('email').value;
         this.password = this.loginForm.get('password').value;
         const rememberMe = this.loginForm.get('rememberMe').value;
+
+        // if (rememberMe) {
+        //     localStorage.setItem('savedUserEmail', email);
+        // } else {
+        //     localStorage.removeItem('savedUserEmail');
+        // }
+        // this.router.navigate(['/']);
 
         this.authenticationService.login(this.email, this.password);
         this.email = '';

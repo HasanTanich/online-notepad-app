@@ -23,7 +23,7 @@ export class PasswordResetRequestComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.titleService.setTitle('angular-material-template - Password Reset Request');
+    this.titleService.setTitle('online-notepad-app - Password Reset Request');
 
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])

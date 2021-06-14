@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-material-template": {
+    "online-notepad-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -14,7 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "dist/angular-material-template",
+            "outputPath": "dist/online-notepad-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -56,18 +56,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-material-template:build"
+            "browserTarget": "online-notepad-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-material-template:build:production"
+              "browserTarget": "online-notepad-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-material-template:build"
+            "browserTarget": "online-notepad-app:build"
           }
         },
         "test": {
@@ -105,7 +105,7 @@
         }
       }
     },
-    "angular-material-template-e2e": {
+    "online-notepad-app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -116,7 +116,7 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-material-template:serve:production"
+              "devServerTarget": "online-notepad-app:serve:production"
             }
           }
         },
@@ -132,5 +132,5 @@
       }
     }
   },
-  "defaultProject": "angular-material-template"
+  "defaultProject": "online-notepad-app"
 }
