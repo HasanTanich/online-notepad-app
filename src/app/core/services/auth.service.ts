@@ -22,7 +22,7 @@ export class AuthenticationService {
                 console.log(res)
                 localStorage.setItem('user', JSON.stringify(res));
                 this.isLoggedIn = true;
-                this.notify.openSnackBar("Well done you cuck");
+                this.notify.openSnackBar("Welcome");
                 this.router.navigate(['/my-notes']);
             }).catch(err => {
                 alert('something is wrong:' + err.message);
@@ -45,7 +45,8 @@ export class AuthenticationService {
     signup(email: string, password: string) {
         this.firebaseAuth.createUserWithEmailAndPassword(email, password)
             .then(res => {
-                alert('Registration successful');
+                alert('Registration successful, you can log in now');
+                this.router.navigate(['/login']);
                 // localStorage.setItem('user', JSON.stringify(res.user));
                 console.log(res);
             }).catch(err => {
@@ -68,7 +69,7 @@ export class AuthenticationService {
             uid: localStorage.user.email,
             // alias: localStorage.user.email.split('@')[0],
             expiration: moment().add(1, 'days').toDate(),
-            fullName: 'Mahadi BABIkerino',
+            fullName: 'Mahadi Babiker',
         };
     }
 
