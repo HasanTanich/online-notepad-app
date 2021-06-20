@@ -7,8 +7,12 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { AppRoutingModule } from './app-routing.module';
+
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule} from '@angular/fire/database'; 
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 
 @NgModule({
   declarations: [
@@ -21,8 +25,15 @@ import { AngularFireModule } from '@angular/fire';
     SharedModule,
     CustomMaterialModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AppRoutingModule
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    AppRoutingModule,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+  // initialize firebaseConfig
+  // firebaseConfig.initializeApp(firebaseConfigConfig);
+  // firebaseConfig.analytics();

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -8,12 +8,24 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 })
 export class EditDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data,
-    public dialog: MatDialog,) { }
+  constructor(public dialogRef: MatDialogRef<EditDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data) { }
 
-  note_title = this.data.data.title;
-  note_text = this.data.data.text;
+  note_title = this.data.title;
+  note_text = this.data.text;
 
   ngOnInit(): void {
+  }
+
+  onCancelClick(){
+    this.dialogRef.close();
+  }
+
+  onSaveClick(){
+    let returndedData = {};
+    return returndedData = {
+      title: this.note_title,
+      text: this.note_text,
+    };
   }
 }

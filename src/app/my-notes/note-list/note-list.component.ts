@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'src/app/core/services/data.service';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+import { AddDialogComponent } from './add-dialog/add-dialog.component';
+
 
 @Component({
   selector: 'app-note-list',
@@ -11,11 +13,11 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 })
 export class NoteListComponent implements OnInit {
 
-  notes = [
-    { title: 'English Vocabulary', text: "I am English" },
-    { title: 'Maklooba Recipe', text: "I'm a Recipe" },
-    { title: 'Important Information', text: "I'm IMPORTANT!" },
-  ];
+  // notes = [
+  //   { title: 'English Vocabulary', text: "I am English" },
+  //   { title: 'Maklooba Recipe', text: "I'm a Recipe" },
+  //   { title: 'Important Information', text: "I'm IMPORTANT!" },
+  // ];
 
   colors = [
     { value: 'lightblue', viewValue: 'Light Blue' },
@@ -26,35 +28,82 @@ export class NoteListComponent implements OnInit {
   ];
 
   selectedValue: string = "white";
-  note;
+  tempNote;
+  noteList;
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.notes, event.previousIndex, event.currentIndex);
+  constructor(private dataService: DataService, public dialog: MatDialog) { 
+  
   }
-  constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    console.log(this.selectedValue);
+    this.getNotes();
+  }
+
+  getNotes(){
+    return this.dataService.getNote().subscribe(data =>{
+      this.noteList = data.data();
+      this.noteList = this.noteList.notes;
+    });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.noteList, event.previousIndex, event.currentIndex);
   }
 
   onNoteClick(note: any) {
-    this.note = note;
+    this.tempNote = note;
   }
 
   onEdit(note) {
-    this.dialog.open(EditDialogComponent, {
-      data: {
-        data: note,
-      },
+    let dialogRef = this.dialog.open(EditDialogComponent, {
+      data: note,
       width: '400px',
       height: '400px',
+      panelClass: 'my-custom-dialog-class'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        note.title = result.title;
+        note.text = result.text;
+        result = {
+          id: note.id,
+          title: note.title,
+          text: note.text,
+        }
+        this.dataService.updateNote(result);
+      }
+    });
+  }
+
+  onAdd() {
+    let dialogRef = this.dialog.open(AddDialogComponent, {
+      width: '400px',
+      height: '400px',
+      panelClass: 'my-custom-dialog-class'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        let randomid = '_' + Math.random().toString(36).substr(2, 9);
+        console.log(randomid);
+        result = {
+          id: randomid,
+          title: result.title,
+          text: result.text,
+        }
+        this.noteList.push(result);
+        this.dataService.addNote(result);
+      }
     });
   }
 
   onDelete(note) {
-    this.notes = this.notes.filter(a => {
+    this.noteList = this.noteList.filter(a => {
       return a != note;
     });
+    this.tempNote = this.noteList[0];
+    this.dataService.deleteNote(note);
   }
 
 }

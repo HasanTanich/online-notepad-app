@@ -1,11 +1,24 @@
-<div class="example-form">
-    <mat-form-field class="example-full-width">
-        <mat-label>Note Title</mat-label>
-        <input matInput placeholder="Ex. Pie Recipe" [(ngModel)]="note_title">
-    </mat-form-field>
+<div class="example-form" style="position: relative">
+  <mat-form-field class="example-full-width">
+    <mat-label>Note Title</mat-label>
+    <input matInput placeholder="Ex. Pie Recipe" [(ngModel)]="note_title" />
+  </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-        <mat-label>Note Text</mat-label>
-        <textarea matInput placeholder="Ex. 5 cups of sugar" [(ngModel)]="note_text"></textarea>
-    </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Note Text</mat-label>
+    <textarea
+      matInput
+      placeholder="Ex. 5 cups of sugar"
+      [(ngModel)]="note_text"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="14"
+    ></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onCancelClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="onSaveClick()" cdkFocusInitial>
+    Ok
+  </button>
 </div>

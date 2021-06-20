@@ -1,0 +1,8 @@
+::ng-deep .my-custom-dialog-class {
+  position: relative !important;
+}
+
+.dialog-actions {
+  position: absolute;
+  bottom: 10%;
+}
