@@ -13,12 +13,6 @@ import { AddDialogComponent } from './add-dialog/add-dialog.component';
 })
 export class NoteListComponent implements OnInit {
 
-  // notes = [
-  //   { title: 'English Vocabulary', text: "I am English" },
-  //   { title: 'Maklooba Recipe', text: "I'm a Recipe" },
-  //   { title: 'Important Information', text: "I'm IMPORTANT!" },
-  // ];
-
   colors = [
     { value: 'lightblue', viewValue: 'Light Blue' },
     { value: 'lightgray', viewValue: 'Gray' },
@@ -31,9 +25,7 @@ export class NoteListComponent implements OnInit {
   tempNote;
   noteList;
 
-  constructor(private dataService: DataService, public dialog: MatDialog) { 
-  
-  }
+  constructor(private dataService: DataService, public dialog: MatDialog) {   }
 
   ngOnInit(): void {
     this.getNotes();

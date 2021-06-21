@@ -3,29 +3,35 @@
     Create Note
   </button>
 </div>
-<div fxLayout="row" style="padding: 0 5% 5% 5%">
-  <div fxFlex="40">
+
+<div fxLayout="row" class="container">
+  <div fxFlex="40" class="notes-list">
     <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
       <div
         class="example-box"
         *ngFor="let note of noteList; let i = index"
         cdkDrag
-        style="margin-top: 10px"
         (click)="onNoteClick(note)"
       >
         <p style="color: black">
           {{ note.title }}
         </p>
-        <div>
+        <div style="display: inline-flex">
           <button
+            class="note-btn"
             mat-raised-button
             color="primary"
-            style="margin-right: 10px"
+            style="margin-right: 3%"
             (click)="onEdit(note)"
           >
             Edit
           </button>
-          <button mat-raised-button color="warn" (click)="onDelete(note)">
+          <button
+            class="note-btn"
+            mat-raised-button
+            color="warn"
+            (click)="onDelete(note)"
+          >
             Delete
           </button>
         </div>
@@ -33,20 +39,46 @@
     </div>
   </div>
 
-  <div fxFlex="35" style="margin-left: 13%">
-    <div
-      class="text-box"
-      [ngStyle]="{ background: 2 > 1 ? selectedValue : '' }"
-    >
-      <div class="note-settings">
+  <div fxFlex style="margin-left: 13%">
+    <div class="note-settings">
+      <h5>note background color</h5>
+      <mat-form-field>
+        <mat-label>favourite color</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="color">
           <mat-option *ngFor="let color of colors" [value]="color.value">
             {{ color.viewValue }}
           </mat-option>
         </mat-select>
-      </div>
-
-      <p>{{ tempNote?.text }}</p>
+      </mat-form-field>
     </div>
+
+    <textarea
+      *ngIf="tempNote"
+      disabled
+      [ngStyle]="{ background: 2 > 1 ? selectedValue : '' }"
+      class="text-box"
+      cols="55"
+      rows="15"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="10"
+      cdkAutosizeMaxRows="40"
+      cdkAutosizeMaxColumns="50"
+    >
+      {{ tempNote?.title + "\n\n" + tempNote?.text }}
+      </textarea
+    >
+    <textarea
+      *ngIf="!tempNote"
+      disabled
+      [ngStyle]="{ background: 2 > 1 ? selectedValue : '' }"
+      class="text-box"
+      cols="55"
+      rows="15"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="10"
+      cdkAutosizeMaxRows="40"
+      cdkAutosizeMaxColumns="50"
+    >
+    </textarea>
   </div>
 </div>
