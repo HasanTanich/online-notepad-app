@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'src/app/core/services/data.service';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { AddDialogComponent } from './add-dialog/add-dialog.component';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class NoteListComponent implements OnInit {
   tempNote;
   noteList;
 
-  constructor(private dataService: DataService, public dialog: MatDialog) {   }
+  constructor(private dataService: DataService, public dialog: MatDialog, public notify : NotificationService) {   }
 
   ngOnInit(): void {
     this.getNotes();
@@ -63,6 +64,7 @@ export class NoteListComponent implements OnInit {
           title: note.title,
           text: note.text,
         }
+        this.notify.openSnackBar("You have successfully updated your note!");
         this.dataService.updateNote(result);
       }
     });
@@ -78,12 +80,12 @@ export class NoteListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         let randomid = '_' + Math.random().toString(36).substr(2, 9);
-        console.log(randomid);
         result = {
           id: randomid,
           title: result.title,
           text: result.text,
         }
+        this.notify.openSnackBar("You have successfully added your note!");
         this.noteList.push(result);
         this.dataService.addNote(result);
       }
@@ -95,6 +97,7 @@ export class NoteListComponent implements OnInit {
       return a != note;
     });
     this.tempNote = this.noteList[0];
+    this.notify.openSnackBar("You have successfully Deleted your note!");
     this.dataService.deleteNote(note);
   }
 
