@@ -1,0 +1,12 @@
+Activities :
+
+Register Hasan 
+Login Mahadi  
+Design UI together  
+Firebase CRUD Hasan Create and Read Mahadi Upadate and Delete
+Testing Mahadi 
+Architectural patterns Together 
+Change color on notepad Hasan 
+Logout Mahadi 
+Design patterns together
+Change password together 

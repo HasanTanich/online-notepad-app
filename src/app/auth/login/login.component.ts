@@ -5,7 +5,6 @@ import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/delay';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 
-
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',

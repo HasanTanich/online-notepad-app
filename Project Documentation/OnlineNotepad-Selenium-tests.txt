@@ -1,0 +1,263 @@
+package test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class TestNotepad {
+	
+	public static WebDriver webDriver;
+	public String baseUrl = "https://online-notepad.vercel.app/";
+
+	@BeforeAll
+	public static void setUp() {
+		System.setProperty("webdriver.chrome.driver", "D:\\Chrome\\chromedriver.exe");
+	
+		
+		webDriver = new ChromeDriver();
+	}
+
+
+	@Test
+	public void testRegisterFunctionality() throws InterruptedException {
+		webDriver.get(baseUrl);
+
+		webDriver.manage().window().maximize();
+		Thread.sleep(1000);
+
+		WebElement register = webDriver.findElement(By.xpath("//*[@id=\"mat-tab-label-0-1\"]"));
+		register.click();
+		Thread.sleep(1000);
+
+		WebElement email = webDriver.findElement(By.xpath("//*[@id=\"emailInput\"]"));
+		WebElement password = webDriver.findElement(By.xpath("//*[@id=\"passwordInput\"]"));
+
+		email.sendKeys("babikertanich1234@gmail.com");
+		password.sendKeys("Testing123@");
+
+		WebElement registerButton = webDriver.findElement(By.xpath("//*[@id=\"signup\"]"));
+		registerButton.click();
+
+		Thread.sleep(3000);
+
+		Alert alert = webDriver.switchTo().alert();
+		String successMessage = alert.getText();
+	
+		assertEquals("Registration successful, you can log in now", successMessage);
+		
+
+		webDriver.switchTo().alert().accept();
+
+		Thread.sleep(2000);
+
+	}
+	
+	@Test
+	public void testRegisterFunctionalityWithoutInput() throws InterruptedException {
+		webDriver.get(baseUrl);
+
+		webDriver.manage().window().maximize();
+		Thread.sleep(1000);
+
+		WebElement register = webDriver.findElement(By.xpath("//*[@id=\"mat-tab-label-0-1\"]"));
+		register.click();
+		Thread.sleep(1000);
+
+		WebElement email = webDriver.findElement(By.xpath("//*[@id=\"emailInput\"]"));
+		WebElement password = webDriver.findElement(By.xpath("//*[@id=\"passwordInput\"]"));
+
+		email.sendKeys("");
+		password.sendKeys("");
+
+		WebElement registerButton = webDriver.findElement(By.xpath("//*[@id=\"signup\"]"));
+		registerButton.click();
+
+		Thread.sleep(3000);
+
+		Alert alert = webDriver.switchTo().alert();
+		String errorMessage = alert.getText();
+	
+		assertEquals("something is wrong: The email address is badly formatted.", errorMessage);
+		
+
+		webDriver.switchTo().alert().accept();
+
+		Thread.sleep(2000);
+
+	}
+	
+	
+	@Test
+	public void testLogin() throws InterruptedException {
+		webDriver.get(baseUrl);
+
+		webDriver.manage().window().maximize();
+		Thread.sleep(1000);
+
+
+
+		WebElement email = webDriver.findElement(By.xpath("//*[@id=\"emailInput\"]"));
+		WebElement password = webDriver.findElement(By.xpath("//*[@id=\"passwordInput\"]"));
+
+		email.sendKeys("babikertanich123@gmail.com");
+		password.sendKeys("Testing123@");
+
+		WebElement loginButton = webDriver.findElement(By.xpath("//*[@id=\"login\"]"));
+		loginButton.click();
+
+		Thread.sleep(3000);
+
+		
+		String url = webDriver.getCurrentUrl();
+		
+		Thread.sleep(2000);
+		
+		assertEquals("https://online-notepad.vercel.app/my-notes", url);
+
+		
+
+		Thread.sleep(2000);
+
+	}
+	
+	@Test
+	public void testLoginWithWrongEmail() throws InterruptedException {
+		webDriver.get(baseUrl);
+
+		webDriver.manage().window().maximize();
+		Thread.sleep(1000);
+
+
+
+		WebElement email = webDriver.findElement(By.xpath("//*[@id=\"emailInput\"]"));
+		WebElement password = webDriver.findElement(By.xpath("//*[@id=\"passwordInput\"]"));
+
+		email.sendKeys("babikertani3@gmail.com");
+		password.sendKeys("Testing123@");
+
+		WebElement loginButton = webDriver.findElement(By.xpath("//*[@id=\"login\"]"));
+		loginButton.click();
+
+		Thread.sleep(3000);
+
+		
+		Alert alert = webDriver.switchTo().alert();
+		String errorMessage = alert.getText();
+	
+		assertEquals("something is wrong:There is no user record corresponding to this identifier. The user may have been deleted.", errorMessage);
+
+		
+
+		Thread.sleep(2000);
+
+	}
+	
+	@Test
+	public void testLoginWithWrongPassword() throws InterruptedException {
+		webDriver.get(baseUrl);
+
+		webDriver.manage().window().maximize();
+		Thread.sleep(1000);
+
+
+
+		WebElement email = webDriver.findElement(By.xpath("//*[@id=\"emailInput\"]"));
+		WebElement password = webDriver.findElement(By.xpath("//*[@id=\"passwordInput\"]"));
+
+		email.sendKeys("babikertanich12@gmail.com");
+		password.sendKeys("Testin3@");
+
+		WebElement loginButton = webDriver.findElement(By.xpath("//*[@id=\"login\"]"));
+		loginButton.click();
+
+		Thread.sleep(3000);
+
+		
+		Alert alert = webDriver.switchTo().alert();
+		String errorMessage = alert.getText();
+	
+
+		assertEquals("something is wrong:The password is invalid or the user does not have a password.", errorMessage);
+
+		webDriver.switchTo().alert().accept();
+
+		Thread.sleep(2000);
+
+	}
+	
+	
+	
+	@Test
+	public void testCreateNote() throws InterruptedException {
+		webDriver.get(baseUrl);
+
+		webDriver.manage().window().maximize();
+		Thread.sleep(1000);
+
+
+
+		WebElement email = webDriver.findElement(By.xpath("//*[@id=\"emailInput\"]"));
+		WebElement password = webDriver.findElement(By.xpath("//*[@id=\"passwordInput\"]"));
+
+		email.sendKeys("babikertanich123@gmail.com");
+		password.sendKeys("Testing123@");
+
+		WebElement loginButton = webDriver.findElement(By.xpath("//*[@id=\"login\"]"));
+		loginButton.click();
+
+		Thread.sleep(3000);
+
+		
+		String url = webDriver.getCurrentUrl();
+		
+		Thread.sleep(2000);
+		
+		assertEquals("https://online-notepad.vercel.app/my-notes", url);
+
+		WebElement createNote = webDriver.findElement(By.xpath("/html/body/app-root/app-layout/div/mat-sidenav-container/mat-sidenav-content/app-note-list/div[1]/button/span[1]"));
+		createNote.click();
+		
+		Thread.sleep(2000);
+		
+		WebElement noteTitle = webDriver.findElement(By.xpath("//*[@id=\"mat-input-2\"]"));
+		WebElement noteText = webDriver.findElement(By.xpath("//*[@id=\"mat-input-3\"]"));
+
+		noteTitle.sendKeys("Note1");
+		noteText.sendKeys("My first note");
+		
+		Thread.sleep(2000);
+		
+		WebElement okButton = webDriver.findElement(By.xpath("//*[@id=\"mat-dialog-0\"]/app-add-dialog/div[2]/button[2]"));
+		okButton.click();
+		
+		
+		Thread.sleep(4000);
+		
+		Alert alert = webDriver.switchTo().alert();
+			String addedNoteMessage = alert.getText();
+		
+	
+		Thread.sleep(2000);
+	
+		
+		assertEquals("You have successfully added your note!", addedNoteMessage);
+
+	
+		
+		Thread.sleep(2000);
+
+	}
+	
+	
+	@AfterAll
+	public static void tearDown() {
+		webDriver.close();
+	}
+}
