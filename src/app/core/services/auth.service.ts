@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import 'rxjs/add/operator/delay';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
 import { of } from 'rxjs';
@@ -26,8 +26,6 @@ export class AuthenticationService {
             }).catch(err => {
                 alert('something is wrong:' + err.message);
             });
-        // set token property
-        // const decodedToken = jwt_decode(response['token']);
     }
 
     signup(email: string, password: string) {
@@ -40,7 +38,6 @@ export class AuthenticationService {
             }).then( (res) => {
                 console.log(res);
                 alert('Registration successful, you can log in now');
-                // localStorage.setItem('user', JSON.stringify(res.user));
             }).catch(err => {
                 alert('something is wrong: ' + err.message);
             });
@@ -51,25 +48,18 @@ export class AuthenticationService {
     }
 
     getCurrentUser(): any {
-        // TODO: Enable after implementation
-        // return JSON.parse(this.localStorage.getItem('currentUser'));
         let user = JSON.parse(localStorage.getItem("user"));
         return {
             token: localStorage.user.refreshToken,
             isAdmin: true,
             email: user.user.email,
             uid: user.user.uid,
-            // alias: localStorage.user.email.split('@')[0],
             expiration: moment().add(1, 'days').toDate(),
             fullName: user.user.email,
         };
     }
 
     passwordResetRequest(email: string) {
-        return of(true).delay(1000);
-    }
-
-    changePassword(email: string, currentPwd: string, newPwd: string) {
         return of(true).delay(1000);
     }
 

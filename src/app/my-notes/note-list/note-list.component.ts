@@ -6,11 +6,11 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { AddDialogComponent } from './add-dialog/add-dialog.component';
 import { NotificationService } from 'src/app/core/services/notification.service';
 
-
 @Component({
   selector: 'app-note-list',
   templateUrl: './note-list.component.html',
-  styleUrls: ['./note-list.component.css']
+  styleUrls: ['./note-list.component.css'],
+  providers: [DataService, NotificationService],
 })
 export class NoteListComponent implements OnInit {
 

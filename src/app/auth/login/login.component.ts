@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/delay';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 
-import { AuthenticationService } from '../../core/services/auth.service';
-import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    styleUrls: ['./login.component.css'],
+    providers: [AuthenticationService, Title]
 })
 export class LoginComponent implements OnInit {
 
@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
 
     constructor(private router: Router,
         private titleService: Title,
-        private notificationService: NotificationService,
         private authenticationService: AuthenticationService) {
     }
 
@@ -60,44 +59,12 @@ export class LoginComponent implements OnInit {
         this.password = this.loginForm.get('password').value;
         const rememberMe = this.loginForm.get('rememberMe').value;
 
-        // if (rememberMe) {
-        //     localStorage.setItem('savedUserEmail', email);
-        // } else {
-        //     localStorage.removeItem('savedUserEmail');
-        // }
-        // this.router.navigate(['/']);
-
         this.authenticationService.login(this.email, this.password);
         this.email = '';
         this.password = '';
     }
 
-
-    // login() {
-    //     const email = this.loginForm.get('email').value;
-    //     const password = this.loginForm.get('password').value;
-    //     const rememberMe = this.loginForm.get('rememberMe').value;
-
-    //     this.loading = true;
-    //     this.authenticationService
-    //         .login(email.toLowerCase(), password)
-    //         .subscribe(
-    //             data => {
-    //                 if (rememberMe) {
-    //                     localStorage.setItem('savedUserEmail', email);
-    //                 } else {
-    //                     localStorage.removeItem('savedUserEmail');
-    //                 }
-    //                 this.router.navigate(['/']);
-    //             },
-    //             error => {
-    //                 this.notificationService.openSnackBar(error.error);
-    //                 this.loading = false;
-    //             }
-    //         );
-    // }
-
-    // resetPassword() {
-    //     this.router.navigate(['/auth/password-reset-request']);
-    // }
+    resetPassword() {
+        this.router.navigate(['/auth/password-reset-request']);
+    }
 }

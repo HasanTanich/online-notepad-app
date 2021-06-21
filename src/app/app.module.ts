@@ -13,7 +13,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database'; 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
-
 @NgModule({
   declarations: [
     AppComponent
@@ -32,8 +31,3 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-  // initialize firebaseConfig
-  // firebaseConfig.initializeApp(firebaseConfigConfig);
-  // firebaseConfig.analytics();

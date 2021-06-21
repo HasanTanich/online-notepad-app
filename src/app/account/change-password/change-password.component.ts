@@ -2,13 +2,15 @@ import { NotificationService } from './../../core/services/notification.service'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { AuthenticationService } from './../../core/services/auth.service';
 import { SpinnerService } from './../../core/services/spinner.service';
+import { FirebaseApp } from '@angular/fire';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css']
+  styleUrls: ['./change-password.component.css'],
+  providers: [SpinnerService, NotificationService]
 })
 export class ChangePasswordComponent implements OnInit {
 
@@ -20,9 +22,11 @@ export class ChangePasswordComponent implements OnInit {
   newPasswordConfirm: string;
   disableSubmit: boolean;
 
-  constructor(private authService: AuthenticationService,
+  constructor(
     private spinnerService: SpinnerService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private firebase: FirebaseApp,
+    public router : Router) {
 
     this.hideCurrentPassword = true;
     this.hideNewPassword = true;
@@ -56,17 +60,18 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
-    const email = this.authService.getCurrentUser().email;
+    const user = this.firebase.auth().currentUser;
+    console.log(user);
 
-    this.authService.changePassword(email, this.currentPassword, this.newPassword)
-      .subscribe(
-        data => {
-          // this.logger.info(`User ${email} changed password.`);
+    user.updatePassword (this.newPassword)
+      .then(
+        () => {
           this.form.reset();
           this.notificationService.openSnackBar('Your password has been changed.');
+          this.router.navigate(['/my-notes']);
         },
-        error => {
-          this.notificationService.openSnackBar(error.error);
+        (error) => {
+          console.log(error);
         }
       );
   }
