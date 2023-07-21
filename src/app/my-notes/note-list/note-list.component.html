@@ -5,10 +5,10 @@
 </div>
 
 <div fxLayout="row" class="container">
-  <div fxFlex="40" class="notes-list">
-    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <div fxFlex="40" class="notes-list-box">
+    <div cdkDropList class="notes-list" (cdkDropListDropped)="drop($event)">
       <div
-        class="example-box"
+        class="note-box"
         *ngFor="let note of noteList; let i = index"
         cdkDrag
         (click)="onNoteClick(note)"
@@ -30,7 +30,7 @@
             class="note-btn"
             mat-raised-button
             color="warn"
-            (click)="onDelete(note)"
+            (click)="openConfirmDialog(note)"
           >
             Delete
           </button>
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div fxFlex style="margin-left: 13%">
+  <div fxFlex class="note-preview">
     <div class="note-settings">
       <h5>note background color</h5>
       <mat-form-field>
@@ -75,6 +75,9 @@
       cdkTextareaAutosize
       cdkAutosizeMinRows="10"
     >
+    Select a note
     </textarea>
   </div>
 </div>
+
+<!-- <app-content-placeholder-animation></app-content-placeholder-animation> -->
