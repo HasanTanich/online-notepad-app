@@ -1,14 +1,14 @@
-<div fxLayout="row" style="margin-top: 5%; margin-bottom: 2%; padding-left: 5%">
+<div fxLayout="row" class="create-note-btn">
   <button mat-raised-button color="success" (click)="onAdd()">
     Create Note
   </button>
 </div>
 
-<div fxLayout="row" class="container">
-  <div fxFlex="40" class="notes-list">
-    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+<div fxLayout="column" class="container">
+  <div fxFlex="40" class="notes-list-box">
+    <div cdkDropList class="notes-list" (cdkDropListDropped)="drop($event)">
       <div
-        class="example-box"
+        class="note-box"
         *ngFor="let note of noteList; let i = index"
         cdkDrag
         (click)="onNoteClick(note)"
@@ -21,7 +21,6 @@
             class="note-btn"
             mat-raised-button
             color="primary"
-            style="margin-right: 3%"
             (click)="onEdit(note)"
           >
             Edit
@@ -30,7 +29,7 @@
             class="note-btn"
             mat-raised-button
             color="warn"
-            (click)="onDelete(note)"
+            (click)="openConfirmDialog(note)"
           >
             Delete
           </button>
@@ -39,9 +38,9 @@
     </div>
   </div>
 
-  <div fxFlex style="margin-left: 13%">
+  <div fxFlex class="note-preview">
     <div class="note-settings">
-      <h5>note background color</h5>
+      <h3>note background color</h3>
       <mat-form-field>
         <mat-label>favourite color</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="color">
@@ -57,10 +56,10 @@
       disabled
       [ngStyle]="{ background: 2 > 1 ? selectedValue : '' }"
       class="text-box"
-      cols="55"
-      rows="15"
+      cols="50"
+      rows="10"
       cdkTextareaAutosize
-      cdkAutosizeMinRows="10"
+      cdkAutosizeMinRows="2"
     >
       {{ tempNote?.title + "\n\n" + tempNote?.text }}
       </textarea
@@ -70,11 +69,12 @@
       disabled
       [ngStyle]="{ background: 2 > 1 ? selectedValue : '' }"
       class="text-box"
-      cols="55"
-      rows="15"
+      cols="50"
+      rows="10"
       cdkTextareaAutosize
-      cdkAutosizeMinRows="10"
+      cdkAutosizeMinRows="2"
     >
+    Select a note
     </textarea>
   </div>
 </div>

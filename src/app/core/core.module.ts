@@ -1,22 +1,17 @@
-import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MediaMatcher } from '@angular/cdk/layout';
-
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
-import { AuthGuard } from './guards/auth.guard';
-import { throwIfAlreadyLoaded } from './guards/module-import.guard';
-import { GlobalErrorHandler } from './services/globar-error.handler';
-import { AdminGuard } from './guards/admin.guard';
+import { MediaMatcher } from "@angular/cdk/layout";
+import { CommonModule } from "@angular/common";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { ErrorHandler, NgModule, Optional, SkipSelf } from "@angular/core";
+import { AdminGuard } from "./guards/admin.guard";
+import { AuthGuard } from "./guards/auth.guard";
+import { throwIfAlreadyLoaded } from "./guards/module-import.guard";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { SpinnerInterceptor } from "./interceptors/spinner.interceptor";
+import { GlobalErrorHandler } from "./services/globar-error.handler";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule
-  ],
-  declarations: [
-  ],
+  imports: [CommonModule, HttpClientModule],
+  declarations: [],
   providers: [
     AuthGuard,
     AdminGuard,
@@ -24,24 +19,23 @@ import { AdminGuard } from './guards/admin.guard';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: ErrorHandler,
-      useClass: GlobalErrorHandler
+      useClass: GlobalErrorHandler,
     },
-    { provide: 'LOCALSTORAGE', useValue: window.localStorage }
+    { provide: "LOCALSTORAGE", useValue: window.localStorage },
   ],
-  exports: [
-  ]
+  exports: [],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-    throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    throwIfAlreadyLoaded(parentModule, "CoreModule");
   }
 }
