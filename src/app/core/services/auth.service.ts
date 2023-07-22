@@ -4,7 +4,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import * as moment from "moment";
 import { of } from "rxjs";
-import "rxjs/add/operator/delay";
+import { delay } from "rxjs/operators";
 import { NotificationService } from "./notification.service";
 
 @Injectable({
@@ -68,7 +68,7 @@ export class AuthenticationService {
   }
 
   passwordResetRequest(email: string) {
-    return of(true).delay(1000);
+    return of(true).pipe(delay(1000)).subscribe();
   }
 
   passwordReset(
@@ -77,6 +77,6 @@ export class AuthenticationService {
     password: string,
     confirmPassword: string
   ): any {
-    return of(true).delay(1000);
+    return of(true).pipe(delay(1000)).subscribe();
   }
 }

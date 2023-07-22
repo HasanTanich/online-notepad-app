@@ -1,10 +1,15 @@
-<div class="example-form" style="position: relative">
-  <mat-form-field class="example-full-width">
+<div class="form" style="position: relative">
+  <mat-form-field class="full-width">
     <mat-label>Note Title</mat-label>
-    <input matInput placeholder="Ex. Pie Recipe" [(ngModel)]="note_title" />
+    <input
+      matInput
+      placeholder="Ex. Pie Recipe"
+      [(ngModel)]="note_title"
+      (ngModelChange)="onChangedForm()"
+    />
   </mat-form-field>
 
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="full-width">
     <mat-label>Note Text</mat-label>
     <textarea
       matInput
@@ -13,12 +18,13 @@
       cdkTextareaAutosize
       cdkAutosizeMinRows="1"
       cdkAutosizeMaxRows="14"
+      (ngModelChange)="onChangedForm()"
     ></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="dialog-actions">
   <button mat-button (click)="onCancelClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="onSaveClick()" cdkFocusInitial>
+  <button mat-button [mat-dialog-close]="onSaveClick()" [disabled]="unchanged">
     Ok
   </button>
 </div>

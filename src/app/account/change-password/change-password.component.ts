@@ -33,7 +33,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-    const user1 = this.authService.getCurrentUser();
     this.form = new FormGroup({
       currentPassword: new FormControl("", Validators.required),
       newPassword: new FormControl("", Validators.required),
@@ -57,41 +56,33 @@ export class ChangePasswordComponent implements OnInit {
     });
   }
 
-  changePassword() {
+  async changePassword() {
     if (this.newPassword !== this.newPasswordConfirm) {
       this.notificationService.openSnackBar("New passwords do not match.");
       return;
     }
-
     const user = this.firebase.auth().currentUser;
-    const credential = this.firebase
-      .auth()
-      .signInWithEmailAndPassword(user.email, this.currentPassword)
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        if (errorCode === "auth/wrong-password") {
-          alert("Wrong password.");
-        } else {
-          alert(errorMessage);
-        }
-        console.log(error);
-      });
 
-    if (credential) {
-      user.updatePassword(this.newPassword).then(
-        () => {
-          this.form.reset();
-          this.notificationService.openSnackBar(
-            "Your password has been changed."
-          );
-          this.router.navigate(["/my-notes"]);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    try {
+      await this.firebase
+        .auth()
+        .signInWithEmailAndPassword(user.email, this.currentPassword);
+
+      await user.updatePassword(this.newPassword);
+
+      // Password update was successful
+      this.form.reset();
+      this.notificationService.openSnackBar("Your password has been changed.");
+      this.router.navigate(["/my-notes"]);
+    } catch (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === "auth/wrong-password") {
+        alert("Wrong password.");
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
     }
   }
 }

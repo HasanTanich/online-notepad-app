@@ -64,10 +64,6 @@ export class NoteListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result == note) {
-        console.log("same");
-        return;
-      }
       if (result) {
         note.title = result.title;
         note.text = result.text;

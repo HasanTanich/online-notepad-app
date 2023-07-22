@@ -6,8 +6,9 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
-import { Subscription } from "rxjs";
-import { TimerObservable } from "rxjs/observable/TimerObservable";
+import { Subscription } from "rxjs/dist/types/internal/Subscription";
+import { timer } from "rxjs";
+import { take } from "rxjs/operators";
 import { AuthGuard } from "src/app/core/guards/auth.guard";
 import { SpinnerService } from "../../core/services/spinner.service";
 import { AuthenticationService } from "./../../core/services/auth.service";
@@ -45,8 +46,9 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userName = user.fullName;
 
     // Auto log-out subscription
-    const timer = TimerObservable.create(2000, 5000);
-    this.autoLogoutSubscription = timer.subscribe((t) => {
+    const timer$ = timer(2000, 10000).pipe(take(5)); // Emit 5 values at 10000ms intervals starting after 2000ms (2 seconds)
+
+    this.autoLogoutSubscription = timer$.subscribe(() => {
       this.authGuard.canActivate();
     });
   }
